@@ -74,9 +74,8 @@ void CMotionView::OnDraw(CDC* pDC)
 	if (pMotionDoc->GetMoiton().CountFrame()==0)
 	{
 		m_MemDC.TextOut(0,0,_T("프레임 없음."));
-		m_MemDC.TextOut(0,16,_T("24비트 비트맵 파일을 열고"));
-		m_MemDC.TextOut(0,32,_T("모션 창이 열려진 상태에서"));
-		m_MemDC.TextOut(0,48, _T("프레임을 클릭하거나 드래그 하세요."));
+		m_MemDC.TextOut(0,16,_T("24비트 이상의 비트맵 파일을"));
+		m_MemDC.TextOut(0,32,_T("열고 프레임을 추가하세요."));
 	}
 	else
 	{

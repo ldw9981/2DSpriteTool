@@ -82,7 +82,7 @@ void CMotionDoc::Serialize(CArchive& ar)
 		// TODO: 여기에 로딩 코드를 추가합니다.
 
 	}
-	m_Motion.Serialize(ar);
+	//m_Motion.Serialize(ar);
 }
 
 void CMotionDoc::Modified()
