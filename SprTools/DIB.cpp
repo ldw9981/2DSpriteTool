@@ -427,11 +427,17 @@ CRect CDIB::GetMaximizeRect( CPoint& SelectPoint )
 
 	} while( (bLExpand)||(bRExpand)||(bUExpend)||(bDExpand) );
 
+
+	// 계산이 살짝 틀려서 보정
+	rtRet.left++;
+	rtRet.top++;
+
 	rtRet.left++;
 	rtRet.top++;
 	rtRet.right--;
 	rtRet.bottom--;
 
+//	//결과는 실제 픽셀이 있는 영역사이즈
 
 	TRACE(_T("L%d,T%d,R%d,B%d\n"),rtRet.left,rtRet.top,rtRet.right,rtRet.bottom);
 	return rtRet;
@@ -570,6 +576,12 @@ CRect CDIB::GetMinimizeRect( CRect& SelectRect )
 	{
 		rtRet.SetRectEmpty();
 	}
+
+	// 계산이 살짝 틀려서 보정
+	rtRet.left++;
+	rtRet.top++;
+
+	//결과는 실제 픽셀이 있는 영역사이즈
 
 	TRACE(_T("L%d,T%d,R%d,B%d\n"),rtRet.left,rtRet.top,rtRet.right,rtRet.bottom);
 
