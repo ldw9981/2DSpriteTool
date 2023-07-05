@@ -206,8 +206,7 @@ void CMotion::DrawAnimation( CDC* pDC,int x,int y)
 		pFrame = m_listFrame.GetNext(m_DrawPos);
 		if (pFrame!=NULL)
 		{
-			
-			pFrame->TransparentBlt(pDC->GetSafeHdc(),x+pFrame->GetCenterX(),y+pFrame->GetCenterY(),pFrame->GetWidth(),pFrame->GetHeight());
+			pFrame->TransparentBlt(pDC->GetSafeHdc(),x-pFrame->GetCenterX(),y-pFrame->GetCenterY(),pFrame->GetWidth(),pFrame->GetHeight());
 		}
 	}
 }
