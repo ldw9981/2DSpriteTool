@@ -63,6 +63,7 @@ void CFrameCenterDlg::OnPaint()
 	{
 		CFrame *pFrame,*pFramePrev;		
 		// 이전 프레임 
+		/*
 		pFramePrev=m_pMotionDoc->GetMoiton().GetFrameSelectedPrev();
 		if (pFramePrev!=NULL)
 		{
@@ -71,6 +72,7 @@ void CFrameCenterDlg::OnPaint()
 				m_ClientPoint.y - pFramePrev->GetCenterY(),
 				pFramePrev->GetWidth(),pFramePrev->GetHeight());			
 		}			
+		*/
 		
 		//선택된 프레임
 		pFrame=m_pMotionDoc->GetMoiton().GetFrameSelected();
@@ -146,16 +148,26 @@ BOOL CFrameCenterDlg::OnInitDialog()
 
 void CFrameCenterDlg::ReSize( int width,int height )
 {
-	int AddCX,AddCY;
-	AddCX= ::GetSystemMetrics(SM_CXDLGFRAME)*2;
-	AddCY= ::GetSystemMetrics(SM_CYDLGFRAME)*2;
+	CSize size = m_pMotionDoc->GetMoiton().GetUnionRect().Size();
 
-	m_FrameSize.cx=width;
-	m_FrameSize.cy=height;
+	if (size.cx == 0 || size.cy ==0)
+		return;
 
-	SetWindowPos(NULL,0,0,width*2+AddCX,height*2+AddCY+::GetSystemMetrics(SM_CYSMCAPTION),SWP_NOMOVE|SWP_NOACTIVATE );
-	m_ClientPoint.SetPoint(width,height);
-	m_CenterPoint.SetPoint(0,0);	
+	size += CSize(1,1);
+	
+	RECT rcClient = { 0, 0, size.cx *4, size.cy *4 };
+	AdjustWindowRect(&rcClient, GetStyle(), FALSE);
+
+	m_FrameSize.cx = width;
+	m_FrameSize.cy = height;
+
+
+	int CX = (rcClient.right - rcClient.left) ;
+	int CY = (rcClient.bottom - rcClient.top) ;
+	SetWindowPos(NULL, 0, 0, CX, CY, SWP_NOMOVE | SWP_NOACTIVATE);
+
+	m_ClientPoint.SetPoint(size.cx *2, size.cy *2);
+	m_CenterPoint.SetPoint(0, 0);
 }
 void CFrameCenterDlg::OnMouseMove(UINT nFlags, CPoint point)
 {

@@ -48,21 +48,21 @@ BOOL CMotionAnmDlg::IsValidCurrMotionView()
 
 void CMotionAnmDlg::ReSize()
 {
-	if (IsValidCurrMotionView())
-	{
-		CRect rect;
-		rect=m_pMotionDoc->GetMoiton().GetUnionRect();
-		if ((rect.Height()!=0)&&(rect.Width()!=0))
-		{
-			int AddCX,AddCY;
-			AddCX= ::GetSystemMetrics(SM_CXDLGFRAME)*2;
-			AddCY= ::GetSystemMetrics(SM_CYDLGFRAME)*2;
-			SetWindowPos(NULL,0,0,rect.Width()*2+AddCX,rect.Height()*2+AddCY+::GetSystemMetrics(SM_CYSMCAPTION),
-				SWP_NOMOVE|SWP_NOACTIVATE);
-		}
-	}
-	
+	if (!IsValidCurrMotionView())
+		return;
+
+	CSize size = m_pMotionDoc->GetMoiton().GetUnionRect().Size();
+
+	size += CSize(1, 1);
+
+	RECT rcClient = { 0, 0, size.cx * 4, size.cy * 4 };
+	AdjustWindowRect(&rcClient, GetStyle(), FALSE);
+
+	int CX = (rcClient.right - rcClient.left);
+	int CY = (rcClient.bottom - rcClient.top);
+	SetWindowPos(NULL, 0, 0, CX, CY, SWP_NOMOVE | SWP_NOACTIVATE);	
 }
+
 BEGIN_MESSAGE_MAP(CMotionAnmDlg, CDialog)
 	ON_WM_SIZE()
 	ON_WM_PAINT()

@@ -82,7 +82,9 @@ void CMotionDoc::Serialize(CArchive& ar)
 		// TODO: 여기에 로딩 코드를 추가합니다.
 
 	}
-	//m_Motion.Serialize(ar);
+	
+	// 중점 좌표도 봐야하므로 이미지 저장함.
+	m_Motion.Serialize(ar);
 }
 
 void CMotionDoc::Modified()

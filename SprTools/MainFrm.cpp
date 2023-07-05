@@ -203,7 +203,7 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
 
 	m_FrameCenterDlg.SetWindowPos(NULL,ClientRect.right-300,ClientRect.top+100+200,
 		0,0,SWP_NOSIZE);	
-	m_MotionAnmDlg.SetWindowPos(NULL,ClientRect.right-300,ClientRect.Height()/3*2,
+	m_MotionAnmDlg.SetWindowPos(NULL,ClientRect.right-300,ClientRect.Height()/5*4,
 		0,0,SWP_NOSIZE);	
 
 	
@@ -242,6 +242,7 @@ void CMainFrame::SetCurrMotionView( CMotionView* pMotionView )
 	else
 	{		
 		m_FrameCenterDlg.Init(GetCurrMotionDoc()->GetMoiton().GetFrameSelected());
+		m_MotionAnmDlg.SetAnimate(TRUE);
 	}
 }
 
