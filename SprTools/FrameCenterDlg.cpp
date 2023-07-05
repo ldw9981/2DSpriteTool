@@ -79,8 +79,8 @@ void CFrameCenterDlg::OnPaint()
 		if (pFrame!=NULL)
 		{
 			pFrame->TransparentBlt(m_MemDC.GetSafeHdc(),
-				m_ClientPoint.x - m_CenterPoint.x,
-				m_ClientPoint.y - m_CenterPoint.y,
+				m_ClientPoint.x + m_CenterPoint.x,
+				m_ClientPoint.y + m_CenterPoint.y,
 				pFrame->GetWidth(),pFrame->GetHeight());			
 		}	
 	}	
@@ -173,8 +173,8 @@ void CFrameCenterDlg::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CRect temp;
-	temp.left	=m_ClientPoint.x-m_CenterPoint.x;
-	temp.top	=m_ClientPoint.y-m_CenterPoint.y;
+	temp.left	=m_ClientPoint.x + m_CenterPoint.x;
+	temp.top	=m_ClientPoint.y + m_CenterPoint.y;
 	temp.right	=temp.left+m_FrameSize.cx;
 	temp.bottom	=temp.top+m_FrameSize.cy;
 	if (temp.PtInRect(point))
@@ -186,7 +186,7 @@ void CFrameCenterDlg::OnMouseMove(UINT nFlags, CPoint point)
 		else
 		{
 			TRACE(_T("%d,%d\n"),point.x,point.y);
-			m_CenterPoint += m_PrevPoint - point;			
+			m_CenterPoint -= m_PrevPoint - point;			
 			Invalidate(FALSE);					
 			SetCursor(::AfxGetApp()->LoadCursor(IDC_HANDPICKUP));	
 		}
@@ -202,8 +202,8 @@ void CFrameCenterDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	if (IsValidCurrMotionView())
 	{
 		CRect temp;
-		temp.left	=m_ClientPoint.x-m_CenterPoint.x;
-		temp.top	=m_ClientPoint.y-m_CenterPoint.y;
+		temp.left	=m_ClientPoint.x+m_CenterPoint.x;
+		temp.top	=m_ClientPoint.y+m_CenterPoint.y;
 		temp.right	=temp.left+m_FrameSize.cx;
 		temp.bottom	=temp.top+m_FrameSize.cy;
 		if (temp.PtInRect(point))
@@ -290,19 +290,19 @@ void CFrameCenterDlg::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		bChange=TRUE;
 		break;
 	case VK_NUMPAD2:
-		m_CenterPoint.y--;
-		bChange=TRUE;
-		break;
-	case VK_NUMPAD8:
 		m_CenterPoint.y++;
 		bChange=TRUE;
 		break;
+	case VK_NUMPAD8:
+		m_CenterPoint.y--;
+		bChange=TRUE;
+		break;
 	case VK_NUMPAD6:
-		m_CenterPoint.x--;
+		m_CenterPoint.x++;
 		bChange=TRUE;
 		break;
 	case VK_NUMPAD4:
-		m_CenterPoint.x++;
+		m_CenterPoint.x--;
 		bChange=TRUE;
 		break;
 	}
@@ -342,19 +342,19 @@ BOOL CFrameCenterDlg::PreTranslateMessage(MSG* pMsg)
 			switch(pMsg->wParam)
 			{
 			case VK_LEFT:
-				m_CenterPoint.x++;
-				bChange=TRUE;
-				break;
-			case VK_RIGHT:
 				m_CenterPoint.x--;
 				bChange=TRUE;
 				break;
+			case VK_RIGHT:
+				m_CenterPoint.x++;
+				bChange=TRUE;
+				break;
 			case VK_UP:
-				m_CenterPoint.y++;
+				m_CenterPoint.y--;
 				bChange=TRUE;
 				break;
 			case VK_DOWN:
-				m_CenterPoint.y--;
+				m_CenterPoint.y++;
 				bChange=TRUE;
 				break;		
 			}
