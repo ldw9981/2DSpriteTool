@@ -78,9 +78,9 @@ BOOL CDIB::Load( LPCTSTR pszFileName )
 	m_nPitch=ComputePitch(m_nWidth,m_nBPP);
 	
 	
-	if (m_nBPP < 24 )
+	if (m_nBPP != 24 )
 	{
-		::AfxMessageBox(_T("색상이 24비트 미만 입니다."));
+		::AfxMessageBox(_T("24비트 비트맵만 처리 가능합니다."));
 		return FALSE;
 	}
 	int sizebyte;
