@@ -427,8 +427,8 @@ CRect CDIB::GetMaximizeRect( CPoint& SelectPoint )
 
 	} while( (bLExpand)||(bRExpand)||(bUExpend)||(bDExpand) );
 
-	rtRet.left++;
-	rtRet.top++;
+//	rtRet.left;
+//	rtRet.top;
 	rtRet.right--;
 	rtRet.bottom--;
 

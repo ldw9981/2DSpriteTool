@@ -196,18 +196,19 @@ CFrame* CMotion::FindFrame( CPoint& ptInput,CRect& rtOuput,int& idxOutput )
 
 void CMotion::DrawAnimation( CDC* pDC,int x,int y)
 {		
-	if (m_listFrame.GetCount()!=0)
+	if (m_listFrame.GetCount()==0)
+		return;
+
+	if (m_DrawPos==NULL)
 	{
-		if (m_DrawPos==NULL)
-		{
-			m_DrawPos=m_listFrame.GetHeadPosition();
-		}
-		CFrame* pFrame;
-		pFrame = m_listFrame.GetNext(m_DrawPos);
-		if (pFrame!=NULL)
-		{
-			pFrame->TransparentBlt(pDC->GetSafeHdc(),x-pFrame->GetCenterX(),y-pFrame->GetCenterY(),pFrame->GetWidth(),pFrame->GetHeight());
-		}
+		m_DrawPos=m_listFrame.GetHeadPosition();
+	}	
+
+	CFrame* pFrame;
+	pFrame = m_listFrame.GetNext(m_DrawPos);
+	if (pFrame!=NULL)
+	{
+		pFrame->TransparentBlt(pDC->GetSafeHdc(),x-pFrame->GetCenterX(),y-pFrame->GetCenterY(),pFrame->GetWidth(),pFrame->GetHeight());
 	}
 }
 
@@ -359,6 +360,8 @@ void CMotion::DeleteFrame( int index )
 
 	ReCalcSpreadRect();
 	ReCalcUnionRect();
+
+	m_DrawPos = m_listFrame.GetHeadPosition();
 }
 
 BOOL CMotion::Drag( CPoint& pt )
